@@ -66,6 +66,14 @@ class CircularRenderBox extends RenderBox
   }
 
   @override
+  Size computeDryLayout(BoxConstraints constraints) {
+    final size = constraints.constrain(
+      Size(constraints.maxWidth, constraints.maxHeight),
+    );
+    return size;
+  }
+
+  @override
   void performLayout() {
     if (childCount == 0) {
       size = constraints.smallest;
@@ -74,7 +82,9 @@ class CircularRenderBox extends RenderBox
 
     final customAngleInRadians = customAngle * pi / 180;
     final angleStep = 2 * pi / childCount;
-    size = Size(_customRadius * 2, _customRadius * 2);
+
+    final computedSize = Size(_customRadius * 2, _customRadius * 2);
+    size = constraints.constrain(computedSize);
 
     var child = firstChild;
     var index = 0;
@@ -83,9 +93,9 @@ class CircularRenderBox extends RenderBox
 
       final angle = index * angleStep + customAngleInRadians;
       final x =
-          _customRadius + cos(angle) * _customRadius - child.size.width / 2;
+          size.width / 2 + cos(angle) * _customRadius - child.size.width / 2;
       final y =
-          _customRadius + sin(angle) * _customRadius - child.size.height / 2;
+          size.height / 2 + sin(angle) * _customRadius - child.size.height / 2;
 
       (child.parentData as CircularParentData).offset = Offset(x, y);
       child = childAfter(child);
