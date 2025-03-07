@@ -1,3 +1,8 @@
-# render_object_challenge
+# **Circular Layout with Custom Render Object**  
 
-A new Flutter project.
+## 📌 **Features**
+- 🌀 **Custom `RenderBox`** to position children in a circular manner.
+---
+
+## 🖼 **Example UI (from golden test)**
+![Circular Layout Example](test/widgets/goldens/macos/circular_layout.png)
